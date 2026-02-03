@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CNH Extraction Schema",
+  "description": "Brazilian National Driver's License (Carteira Nacional de Habilitação)",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "nome_completo": {
+      "type": "string",
+      "description": "Full name as shown on document"
+    },
+    "cpf": {
+      "type": "string",
+      "description": "CPF number in format XXX.XXX.XXX-XX",
+      "pattern": "^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$"
+    },
+    "data_nascimento": {
+      "type": "string",
+      "description": "Date of birth in ISO 8601 format",
+      "format": "date"
+    },
+    "categoria_habilitacao": {
+      "type": "string",
+      "description": "License category",
+      "enum": ["ACC", "A", "B", "AB", "C", "D", "E", "AC", "AD", "AE", "BC", "BD", "BE", "CD", "CE", "DE"]
+    },
+    "num_registro": {
+      "type": "string",
+      "description": "Registration number (11 digits)"
+    },
+    "data_validade": {
+      "type": "string",
+      "description": "Expiration date in ISO 8601 format",
+      "format": "date"
+    },
+    "data_primeira_habilitacao": {
+      "type": "string",
+      "description": "First license date in ISO 8601 format",
+      "format": "date"
+    },
+    "orgao_emissor": {
+      "type": "string",
+      "description": "Issuing authority (e.g., DETRAN-SP)"
+    },
+    "local_emissao": {
+      "type": "string",
+      "description": "Place of issuance (city, state)"
+    },
+    "observacoes": {
+      "type": "string",
+      "description": "Additional observations/restrictions"
+    }
+  },
+  "required": ["nome_completo", "cpf", "data_nascimento", "categoria_habilitacao", "num_registro"]
+}

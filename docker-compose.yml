@@ -1,0 +1,54 @@
+# BR Doc OCR - Docker Compose Configuration
+# Development environment with GPU support
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: br-doc-ocr
+    volumes:
+      # Source code for development
+      - ./src:/app/src:ro
+      - ./tests:/app/tests:ro
+      # Persistent storage for models and data
+      - ./models:/app/models
+      - ./data:/app/data
+      # Environment file
+      - ./.env:/app/.env:ro
+    environment:
+      - CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///./data/br_doc_ocr.db}
+      - MODEL_CACHE_DIR=/app/models
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - HF_HOME=/app/models/huggingface
+    # GPU support (requires nvidia-container-toolkit)
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    # Keep container running for development
+    stdin_open: true
+    tty: true
+    command: ["bash"]
+
+  # Optional: PostgreSQL for production-like testing
+  db:
+    image: postgres:15-alpine
+    container_name: br-doc-ocr-db
+    profiles:
+      - production
+    environment:
+      POSTGRES_USER: br_doc_ocr
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+      POSTGRES_DB: br_doc_ocr
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:

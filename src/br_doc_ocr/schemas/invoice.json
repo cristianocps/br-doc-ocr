@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Invoice Extraction Schema",
+  "description": "Brazilian Invoice (Nota Fiscal)",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "empresa": {
+      "type": "string",
+      "description": "Company/vendor name"
+    },
+    "cnpj": {
+      "type": "string",
+      "description": "Company CNPJ in format XX.XXX.XXX/XXXX-XX",
+      "pattern": "^\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}$"
+    },
+    "data_emissao": {
+      "type": "string",
+      "description": "Issue date in ISO 8601 format",
+      "format": "date"
+    },
+    "numero_nota": {
+      "type": "string",
+      "description": "Invoice number"
+    },
+    "serie": {
+      "type": "string",
+      "description": "Invoice series"
+    },
+    "valor_total": {
+      "type": "number",
+      "description": "Total value in BRL"
+    },
+    "valor_produtos": {
+      "type": "number",
+      "description": "Products subtotal in BRL"
+    },
+    "valor_impostos": {
+      "type": "number",
+      "description": "Total taxes in BRL"
+    },
+    "icms": {
+      "type": "number",
+      "description": "ICMS tax amount"
+    },
+    "ipi": {
+      "type": "number",
+      "description": "IPI tax amount"
+    },
+    "chave_acesso": {
+      "type": "string",
+      "description": "NFe access key (44 digits)"
+    },
+    "natureza_operacao": {
+      "type": "string",
+      "description": "Nature of operation"
+    },
+    "destinatario_nome": {
+      "type": "string",
+      "description": "Recipient name"
+    },
+    "destinatario_cnpj_cpf": {
+      "type": "string",
+      "description": "Recipient CNPJ or CPF"
+    }
+  },
+  "required": ["empresa", "numero_nota", "valor_total"]
+}

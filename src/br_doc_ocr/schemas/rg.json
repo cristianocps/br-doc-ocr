@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RG Extraction Schema",
+  "description": "Brazilian General Registration / Identity Card (Registro Geral)",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "nome_completo": {
+      "type": "string",
+      "description": "Full name as shown on document"
+    },
+    "registro_geral": {
+      "type": "string",
+      "description": "RG number (format varies by state)"
+    },
+    "cpf": {
+      "type": "string",
+      "description": "CPF number in format XXX.XXX.XXX-XX (if present)",
+      "pattern": "^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$"
+    },
+    "data_nascimento": {
+      "type": "string",
+      "description": "Date of birth in ISO 8601 format",
+      "format": "date"
+    },
+    "data_expedicao": {
+      "type": "string",
+      "description": "Issue date in ISO 8601 format",
+      "format": "date"
+    },
+    "orgao_emissor": {
+      "type": "string",
+      "description": "Issuing authority (e.g., SSP-SP, DETRAN-RJ)"
+    },
+    "naturalidade": {
+      "type": "string",
+      "description": "Place of birth (city, state)"
+    },
+    "filiacao_pai": {
+      "type": "string",
+      "description": "Father's name"
+    },
+    "filiacao_mae": {
+      "type": "string",
+      "description": "Mother's name"
+    },
+    "doc_origem": {
+      "type": "string",
+      "description": "Origin document reference"
+    }
+  },
+  "required": ["nome_completo", "registro_geral", "data_nascimento"]
+}
